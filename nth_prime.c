@@ -4,24 +4,15 @@
 #include <time.h>
 #include <math.h>
 
-double checkPrime(int num) {
-    double rest = 1.0;
-    if(num == 0 || num == 1) {
-        rest = 0.0;
-        return rest;
+int checkPrime(int n) {
+    if (n == 2 || n == 3) return 1;
+    else if (n < 2 || n % 2 == 0 || n % 3 == 0) return 0;
+
+    for (int i = 5; i <= sqrt(n); i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return 0;
     }
-    else if(num == 2 || num == 3) {
-        rest = 1.0;
-        return rest;
-    }
-    else {
-        for(int i = 2; i <= num/2; i++) {
-            if(num % i == 0) {
-                rest = 0.0;
-            }
-        }
-    }
-    return rest;
+
+    return 1;
 }
 
 double willans_impl_serial(int num) {
@@ -29,7 +20,7 @@ double willans_impl_serial(int num) {
 
     for(int i = 1; i <= pow(2.0,num); i++) {
         for(int j = 1; j <= i; j++)  {
-            sum += checkPrime(j);
+            sum += (double) checkPrime(j);
         }
         sum += 1.0;
         sum = num/sum;
