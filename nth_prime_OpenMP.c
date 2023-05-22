@@ -20,7 +20,7 @@ double willans_impl_parallel(int num) {
     double nthprime = 0.0, sum = 0.0;
 
     #pragma omp parallel for reduction(+:sum) num_threads(6)
-    for(int i = 1; i <= pow(2.0,num); i++) {
+    for(int i = 1; i <= (num*num); i++) {
         for(int j = 1; j <= i; j++)  {
             sum += (double) checkPrime(j);
         }
@@ -37,10 +37,13 @@ double willans_impl_parallel(int num) {
 
 int main() {
     int num = 0;
-    double nthprime = 0.0;
+    double nthprime = 0.0, start = 0.0, end = 0.0;
     printf("Digite o 'n' primo que deseja saber: ");
     scanf("%d", &num);
+    start = omp_get_wtime();
     nthprime = willans_impl_parallel(num);
-    printf("O %d primo e %f", num, nthprime);
+    end = omp_get_wtime();
+    printf("O %d primo e %.2f", num, nthprime);
+    printf("\nTempo de execucao: %f\n", end - start);   
     return 0;
 }
