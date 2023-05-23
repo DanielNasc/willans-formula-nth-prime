@@ -23,8 +23,13 @@ int main() {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &n_cpus);
 
-    int num = 4;
-    double nthprime_partial = 0, sum = 0, *partial_results;
+    int num = 20;
+    double nthprime_partial = 0, sum = 0, *partial_results,
+            start, end;
+
+    if (rank == 0) {
+        start = MPI_Wtime();
+    }
 
     MPI_Bcast(&num, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
@@ -54,7 +59,10 @@ int main() {
         }
         nthprime++;
 
+        end = MPI_Wtime();
+
         printf("Primo: %f\n", nthprime);
+        printf("Tempo total: %f\n", end - start);
     }
 
     MPI_Finalize();
