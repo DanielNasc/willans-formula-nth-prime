@@ -33,7 +33,7 @@ int main() {
 
     MPI_Bcast(&num, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-    for(int i = rank + 1; i <= pow(2.0,num); i += n_cpus) {
+    for(int i = rank + 1; i <= pow(num, 2.0); i += n_cpus) {
         for(int j = 1; j <= i; j++)  {
             sum += (double) checkPrime(j);
         }

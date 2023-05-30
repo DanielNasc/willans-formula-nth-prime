@@ -15,7 +15,7 @@ int checkPrime(int n) {
 double willans_impl_serial(int num) {
     double nthprime = 0.0, sum = 0.0;
 
-    for(int i = 1; i <= pow(2.0,num); i++) {
+    for(int i = 1; i <= pow(num, 2.0); i++) {
         for(int j = 1; j <= i; j++)  {
             sum += (double) checkPrime(j);
         }
