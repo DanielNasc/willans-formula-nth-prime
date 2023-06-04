@@ -34,7 +34,7 @@ double willans_impl_serial(int num) {
 double willans_impl_parallel_omp(int num) {
     double nthprime = 0.0, sum = 0.0;
 
-    #pragma omp parallel for reduction(+:nthprime) private(sum) num_threads(2)
+    #pragma omp parallel for reduction(+:nthprime) private(sum)
     for(int i = 1; i <= (num * num); i++) {
         for(int j = 1; j <= i; j++)  {
             sum += (double) checkPrime(j);
