@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# COMPILATION
+
+echo "Compiling Serial and OpenMP"
+gcc -c -fopenmp -lm main.c -o main.o
+gcc -c -fopenmp -lm willans_implementations.c -o willans_implementations.o
+gcc *.o -o main -lm -fopenmp
+
+echo "Compiling OpenMPI"
+mpicc main_openmpi.c -o main_openmpi -lm
+
+function clean {
+    rm *.o
+    rm main
+    rm main_openmpi
+}
+
+function print_line {
+    echo "----------------------------------------"
+}
+
+# SERIAL AND OPENMP
+
+# 10 to 100, step 10
+
+for i in {10..100..10}
+do
+    echo "Running for $i"
+    ./main $i
+    print_line
+
+done
+
+# 100 to 300, step 100
+
+for i in {100..300..100}
+do
+    echo "Running for $i"
+    ./main $i
+    print_line
+done
+
+
+# OMPI
+
+# 10 to 100, step 10
+
+for i in {10..100..10}
+do
+    echo "Running for $i"
+    mpirun ./main_openmpi $i
+    print_line
+done
+
+# 100 to 300, step 100
+
+for i in {100..300..100}
+do
+    echo "Running for $i"
+    mpirun ./main_openmpi $i
+    print_line
+done
+
+# CLEANING
+echo "Cleaning"
+clean

@@ -16,18 +16,28 @@ int checkPrime(int n) {
     return 1;
 }
 
-int main() {
-    MPI_Init(NULL, NULL);
+int main(int argc, char **argv) {
+    MPI_Init(&argc, &argv);
 
     int rank, n_cpus;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &n_cpus);
 
-    int num = 20;
     double nthprime_partial = 0, sum = 0, *partial_results,
             start, end;
 
+    int num = 0;
+
     if (rank == 0) {
+
+        if (argc != 2) {
+            printf("Usage: %s <n>\n", argv[0]);
+            exit(1);
+        }
+
+        long conv = strtol(argv[1], NULL, 10);
+        num = conv;
+
         start = MPI_Wtime();
     }
 
